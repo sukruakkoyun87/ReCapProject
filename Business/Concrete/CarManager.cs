@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Business.Abstract;
 using DataAccess.Abstract;
@@ -24,16 +25,20 @@ namespace Business.Concrete
 
         public void Add(Car car)
         {
-            if (car.CarName.Length >= 2 && car.DailyPrice > 0)
+
+            if (car.CarName.Min()!=2)
             {
-                _carDal.Add(car);
-                
+                Console.WriteLine("Araba Adı en az iki karakterden oluşmalıdır");
+            }
+            else if (car.DailyPrice>0)
+            {
+                Console.WriteLine("Günlük Fiyat sıfırdan büyük olmalıdır");
             }
             else
             {
-                Console.WriteLine("Araba Adı en az iki karakterden oluşmalıdır");
-                Console.WriteLine("Günlük Fiyat sıfırdan büyük olmalıdır");
+              _carDal.Add(car);  
             }
+           
         }
 
         public void Update(Car car)

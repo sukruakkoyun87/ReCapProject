@@ -1,6 +1,8 @@
 ﻿using System;
 using Business.Concrete;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
+using Entities.Concrete;
 
 namespace ConsoleUI
 {
@@ -8,9 +10,9 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager carManager = new CarManager(new InMemoryCarDal());
-            BrandManager brandManager = new BrandManager(new InMemoryBrandDal());
-            ColorManager colorManager = new ColorManager(new InMemoryColorDal());
+            CarManager carManager = new CarManager(new EfCarDal());
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            ColorManager colorManager = new ColorManager(new EfColorDal());
 
             Console.WriteLine("----- Araba Markaları ----- \n");
 
@@ -26,7 +28,7 @@ namespace ConsoleUI
 
             foreach (var car in carManager.GetAll())
             {
-                Console.WriteLine("Model Yılı : {0}  --  Açıklama : {1}  -- Fiyat : {2} ",car.ModelYear,car.Description,car.DailyPrice);
+                Console.WriteLine("Araba Adı : {3} -- Model Yılı : {0}  --  Açıklama : {1}  -- Fiyat : {2} ",car.ModelYear,car.Description,string.Format("{0:N2}", car.DailyPrice),car.CarName);
             }
 
             Console.WriteLine("\n----- Araba Renkleri -----\n");
@@ -36,6 +38,21 @@ namespace ConsoleUI
                 Console.WriteLine("Araç Renkleri : {0}",color.ColorName);
             }
 
+
+            Console.WriteLine("\n----- Araç Ekleme  -----\n");
+
+            Car car1 = new Car
+            {
+                BrandId = 2,
+                ColorId = 2,
+                CarName = "E200",
+                DailyPrice = 250,
+                Description = "E200 Benzinli Kare Motor",
+                ModelYear = 1984
+            };
+
+           carManager.Add(car1);
+            
 
         }
     }
