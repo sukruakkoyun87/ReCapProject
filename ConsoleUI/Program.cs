@@ -14,7 +14,15 @@ namespace ConsoleUI
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             ColorManager colorManager = new ColorManager(new EfColorDal());
 
-            Console.WriteLine("----- Araba Markaları ----- \n");
+
+            Console.WriteLine("----- Araba Tam Liste ----- \n");
+
+            foreach (var detail in carManager.GetCarDetails())
+            {
+                Console.WriteLine("Id : {0} --- Markası : {1}  --- Araç Adı : {2} --- Rengi : {3} --- Model Yılı : {4} --- Günlük Fiyatı : {5} --- Açıklaması : {6}  ",detail.Id,detail.BrandName,detail.CarName,detail.ColorName,detail.ModelYear, string.Format("{0:N2}", detail.DailyPrice), detail.Description);
+            }
+
+            Console.WriteLine("\n----- Araba Markaları ----- \n");
 
 
             foreach (var brand in brandManager.GetAll())
@@ -52,6 +60,31 @@ namespace ConsoleUI
             };
 
            carManager.Add(car1);
+
+           Console.WriteLine("\n----- Renk  CRUD İşlemleri  -----\n");
+            Color color1 = new Color
+            {
+                ColorName = "Lacivert"
+            };
+            colorManager.Add(color1);
+
+
+
+            colorManager.Update(new Color { Id = 1008, ColorName = "Gri" });
+
+            Console.WriteLine(colorManager.GetById(3).ColorName);
+            colorManager.Delete(new Color{Id = 1012});
+
+
+            Console.WriteLine("\n----- Marka  CRUD İşlemleri  -----\n");
+
+            brandManager.Add(new Brand{BrandName = "Fiat"});
+
+            brandManager.Update(new Brand{Id = 6 ,BrandName = "Honda"});
+
+            brandManager.Delete(new Brand{Id =7});
+
+            Console.WriteLine(brandManager.GetById(4).BrandName);
             
 
         }

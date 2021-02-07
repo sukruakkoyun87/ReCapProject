@@ -26,21 +26,25 @@ namespace Business.Concrete
         public void Add(Color color)
         {
             _colorDal.Add(color);
+            Console.WriteLine("Renk Eklendi ...");
         }
 
         public void Update(Color color)
         {
             _colorDal.Update(color);
+            Console.WriteLine("Renk Güncellendi ...");
         }
 
         public void Delete(Color color)
         {
             _colorDal.Delete(color);
+            Console.WriteLine("Renk Silindi ...");
+
         }
 
-        public Color GetById(int id)
+        public Color GetById(int colorId)
         {
-            return _colorDal.Get(x => x.Id == id);
+             return _colorDal.Get(x=>x.Id==colorId);
         }
     }
 }

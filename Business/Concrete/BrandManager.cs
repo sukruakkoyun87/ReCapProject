@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Business.Abstract;
 using DataAccess.Abstract;
@@ -25,16 +26,19 @@ namespace Business.Concrete
         public void Add(Brand brand)
         {
             _brandDal.Add(brand);
+            Console.WriteLine("Marka Eklendi ...");
         }
 
         public void Update(Brand brand)
         {
             _brandDal.Update(brand);
+            Console.WriteLine("Marka Güncellendi ...");
         }
 
         public void Delete(Brand brand)
         {
            _brandDal.Delete(brand);
+           Console.WriteLine("Marka Silindi ...");
         }
 
         public Brand GetById(int id)
