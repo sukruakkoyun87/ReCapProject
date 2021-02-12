@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml.Linq;
 using Business.Abstract;
+using Business.Constant;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -18,33 +20,55 @@ namespace Business.Concrete
         }
 
 
-        public List<Color> GetAll()
+        public IDataResult<List<Color>> GetAll()
         {
-            return _colorDal.GetAll();
+            if (DateTime.Now.Hour==22)
+            {
+                return new ErrorDataResult<List<Color>>(Messages.Maintenance);
+            }
+            else
+            {
+                return new SuccessDataResult<List<Color>>(_colorDal.GetAll(),Messages.ColorListed);
+            }
         }
 
-        public void Add(Color color)
+        public IResult Add(Color color)
         {
-            _colorDal.Add(color);
-            Console.WriteLine("Renk Eklendi ...");
+            if (color.ColorName.Length<2)
+            {
+                return new ErrorResult(Messages.ColorInvalid);
+            }
+            else
+            {
+                _colorDal.Add(color);
+                return new SuccessResult(Messages.ColorAdded);
+            }
+           
         }
 
-        public void Update(Color color)
+        public IResult Update(Color color)
         {
-            _colorDal.Update(color);
-            Console.WriteLine("Renk Güncellendi ...");
+            if (color.ColorName.Length < 2)
+            {
+                return new ErrorResult(Messages.ColorInvalid);
+            }
+            else
+            {
+                _colorDal.Update(color);
+                return new SuccessResult(Messages.ColorUpdated);
+            }
         }
 
-        public void Delete(Color color)
+        public IResult Delete(Color color)
         {
             _colorDal.Delete(color);
-            Console.WriteLine("Renk Silindi ...");
+            return new SuccessResult(Messages.ColorDeleted);
 
         }
 
-        public Color GetById(int colorId)
+        public IDataResult<Color> GetById(int colorId)
         {
-             return _colorDal.Get(x=>x.Id==colorId);
+             return new SuccessDataResult<Color>(_colorDal.Get(x=>x.Id==colorId));
         }
     }
 }

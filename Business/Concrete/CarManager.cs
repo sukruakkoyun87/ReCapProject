@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Business.Abstract;
+using Business.Constant;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -19,66 +21,76 @@ namespace Business.Concrete
         }
 
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll();
+            if (DateTime.Now.Hour==22)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.Maintenance);
+            }
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarListed);
         }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
 
-            if (car.CarName.Min()!=2)
+            if (car.CarName.Min()==2)
             {
-                Console.WriteLine("Araba Adı en az iki karakterden oluşmalıdır");
+                return new ErrorResult(Messages.CarInvalid);
             }
             else if (car.DailyPrice>0)
             {
-                Console.WriteLine("Günlük Fiyat sıfırdan büyük olmalıdır");
+              return new ErrorResult(Messages.CarDailyPriceZero);
             }
             else
             {
-              _carDal.Add(car);  
+              _carDal.Add(car);
+              return new SuccessResult( Messages.CarAdded);
             }
            
         }
 
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
-            if (car.CarName.Length >= 2 && car.DailyPrice > 0)
+            if (car.CarName.Min() == 2)
             {
-                _carDal.Update(car);
-
+                return new ErrorResult(Messages.CarInvalid);
+            }
+            else if (car.DailyPrice > 0)
+            {
+                return new ErrorResult(Messages.CarDailyPriceZero);
             }
             else
             {
-                Console.WriteLine("Araba Adı en az iki karakterden oluşmalıdır");
-                Console.WriteLine("Günlük Fiyat sıfırdan büyük olmalıdır");
+                _carDal.Update(car);
+                return new SuccessResult(Messages.CarUpdated);
             }
+
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _carDal.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
         }
 
-        public Car GetById(int id)
+        public IDataResult<Car> GetById(int id)
         {
-            return _carDal.Get(x => x.Id == id);
+            return new SuccessDataResult<Car>(_carDal.Get(x => x.Id == id));
         }
 
-        public List<Car> GetCarsByBrandId(int brandId)
+        public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
         {
-            return _carDal.GetAll(x => x.BrandId == brandId);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(x => x.BrandId == brandId));
         }
 
-        public List<Car> GetCarsByColorId(int colorId)
+        public IDataResult<List<Car>> GetCarsByColorId(int colorId)
         {
-            return _carDal.GetAll(x => x.ColorId == colorId);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(x => x.ColorId == colorId));
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>>GetCarDetails()
         {
-            return _carDal.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
     

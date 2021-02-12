@@ -17,15 +17,17 @@ namespace ConsoleUI
 
             Console.WriteLine("----- Araba Tam Liste ----- \n");
 
-            foreach (var detail in carManager.GetCarDetails())
+            var detailResult = carManager.GetCarDetails();
+            foreach (var detail in detailResult.Data)
             {
                 Console.WriteLine("Id : {0} --- Markası : {1}  --- Araç Adı : {2} --- Rengi : {3} --- Model Yılı : {4} --- Günlük Fiyatı : {5} --- Açıklaması : {6}  ",detail.Id,detail.BrandName,detail.CarName,detail.ColorName,detail.ModelYear, string.Format("{0:N2}", detail.DailyPrice), detail.Description);
             }
 
             Console.WriteLine("\n----- Araba Markaları ----- \n");
 
+            var brandResult = brandManager.GetAll();
 
-            foreach (var brand in brandManager.GetAll())
+            foreach (var brand in brandResult.Data)
             {
                 Console.WriteLine(" Araç Markaları : {0}",brand.BrandName);
             }
@@ -34,14 +36,16 @@ namespace ConsoleUI
 
             Console.WriteLine("\n----- Araba Özellikleri ve Fiyatı -----\n");
 
-            foreach (var car in carManager.GetAll())
+            var carResult = carManager.GetAll();
+            foreach (var car in carResult.Data)
             {
                 Console.WriteLine("Araba Adı : {3} -- Model Yılı : {0}  --  Açıklama : {1}  -- Fiyat : {2} ",car.ModelYear,car.Description,string.Format("{0:N2}", car.DailyPrice),car.CarName);
             }
 
             Console.WriteLine("\n----- Araba Renkleri -----\n");
 
-            foreach (var color in colorManager.GetAll())
+            var colorResult = colorManager.GetAll();
+            foreach (var color in colorResult.Data)
             {
                 Console.WriteLine("Araç Renkleri : {0}",color.ColorName);
             }
@@ -72,7 +76,7 @@ namespace ConsoleUI
 
             colorManager.Update(new Color { Id = 1008, ColorName = "Gri" });
 
-            Console.WriteLine(colorManager.GetById(3).ColorName);
+            Console.WriteLine(colorManager.GetById(3).Data.ColorName);
             colorManager.Delete(new Color{Id = 1012});
 
 
@@ -84,7 +88,7 @@ namespace ConsoleUI
 
             brandManager.Delete(new Brand{Id =7});
 
-            Console.WriteLine(brandManager.GetById(4).BrandName);
+            Console.WriteLine(brandManager.GetById(4).Data.BrandName);
             
 
         }
