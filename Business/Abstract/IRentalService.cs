@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Abstract
 {
@@ -13,6 +14,7 @@ namespace Business.Abstract
         IResult Update(Rental rental);
         IResult Delete(Rental rental);
 
+        IDataResult<List<RentalDetailDto>> GetRentalDetails();
         IDataResult<Rental> GetById(int rentalId);
     }
 }
