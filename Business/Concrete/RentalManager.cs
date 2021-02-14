@@ -30,14 +30,17 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            if (rental.ReturnDate!=DateTime.Now.Date)
+            var result = _rentalDal.Get(x => x.CarId == rental.CarId && x.ReturnDate == null);
+        
+            if (result.ReturnDate==null&&result.CarId==rental.CarId)
             {
-                _rentalDal.Add(rental);
-                return new SuccessResult(Messages.RentalAdded);
+                return new ErrorResult(Messages.RentalInvalid);
             }
             else
             {
-                return new ErrorResult(Messages.RentalInvalid);
+               
+                _rentalDal.Add(rental);
+                return new SuccessResult(Messages.RentalAdded);
             }
         }
 

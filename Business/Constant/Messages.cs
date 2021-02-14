@@ -40,7 +40,7 @@ namespace Business.Constant
         public static string CustomerListed = "Customer Listelendi ";
 
 
-        public static string RentalInvalid = "Rental  İsmi Geçersiz";
+        public static string RentalInvalid = "Rental  Kaydi  Geçersiz ";
         public static string RentalAdded = "Rental Eklendi";
         public static string RentalDeleted = "Rental Silindi";
         public static string RentalUpdated = "Rental Güncellendi";

@@ -22,18 +22,31 @@ namespace ConsoleUI
 
             //rentalManager.Add(new Rental { CustomerId = 1, CarId = 1, RentDate = new DateTime(2021, 02, 10) });
 
-            Console.WriteLine("----- Kiralanan Araç Bilgileri  ----- \n");
-
-            var rentaldetailResult = rentalManager.GetRentalDetails();
-
-            if (rentaldetailResult.Success)
+            var rentalAddResult= rentalManager.Add(new Rental { CustomerId = 1, CarId = 1, RentDate = new DateTime(2021, 02, 10) ,ReturnDate=new DateTime(2021,02,15)});
+            if (rentalAddResult.Success)
             {
-                foreach (var detail in rentaldetailResult.Data)
-                {
-                    Console.WriteLine("Müşteri Adı : {0} --  Şirket Adı : {1} -- Kiralanan Araç Adı : {2} -- Kiralama Başlangıç Tarihi {3} -- Kiralama Bitiş Tarihi : {4}  ",detail.UserName,detail.CompanyName,detail.CarName,detail.RentDate,detail.ReturnDate);
-                }
+                Console.WriteLine(rentalAddResult.Message);
+                
             }
-           
+            else
+            {
+                Console.WriteLine(rentalAddResult.Message);
+            }
+            
+
+
+            //Console.WriteLine("----- Kiralanan Araç Bilgileri  ----- \n");
+
+            //var rentaldetailResult = rentalManager.GetRentalDetails();
+
+            //if (rentaldetailResult.Success)
+            //{
+            //    foreach (var detail in rentaldetailResult.Data)
+            //    {
+            //        Console.WriteLine("Müşteri Adı : {0} --  Şirket Adı : {1} -- Kiralanan Araç Adı : {2} -- Kiralama Başlangıç Tarihi {3} -- Kiralama Bitiş Tarihi : {4} -- Günlük Kirası {5} ",detail.UserName,detail.CompanyName,detail.CarName,detail.RentDate,detail.ReturnDate, string.Format("{0:N2}", detail.DailyPrice));
+            //    }
+            //}
+
         }
 
         private static void CarDetials()

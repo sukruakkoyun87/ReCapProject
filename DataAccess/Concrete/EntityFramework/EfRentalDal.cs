@@ -31,6 +31,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  ReturnDate=r.ReturnDate,
                                  UserName=u.FirstName +" "+u.LastName,
                                  CarName=b.BrandName+" "+car.CarName,
+                                 DailyPrice=car.DailyPrice,
                                  Id=r.Id
                                  
                              };
