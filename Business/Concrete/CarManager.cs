@@ -33,36 +33,46 @@ namespace Business.Concrete
         public IResult Add(Car car)
         {
 
-            if (car.CarName.Min()==2)
+            if (car.CarName.Length == 2)
             {
-                return new ErrorResult(Messages.CarInvalid);
-            }
-            else if (car.DailyPrice>0)
-            {
-              return new ErrorResult(Messages.CarDailyPriceZero);
+                if (car.DailyPrice > 0)
+                {
+                    _carDal.Update(car);
+                    return new SuccessResult(Messages.CarAdded);
+
+                }
+                else
+                {
+                    return new ErrorResult(Messages.CarDailyPriceZero);
+                }
             }
             else
             {
-              _carDal.Add(car);
-              return new SuccessResult( Messages.CarAdded);
+                return new ErrorResult(Messages.CarInvalid);
+
             }
-           
+
         }
 
         public IResult Update(Car car)
         {
-            if (car.CarName.Min() == 2)
+            if (car.CarName.Length == 2 )
             {
-                return new ErrorResult(Messages.CarInvalid);
-            }
-            else if (car.DailyPrice > 0)
-            {
-                return new ErrorResult(Messages.CarDailyPriceZero);
+                if (car.DailyPrice > 0)
+                {
+                    _carDal.Update(car);
+                    return new SuccessResult(Messages.CarUpdated);
+
+                }
+                else
+                {
+                    return new ErrorResult(Messages.CarDailyPriceZero);
+                }
             }
             else
             {
-                _carDal.Update(car);
-                return new SuccessResult(Messages.CarUpdated);
+                return new ErrorResult(Messages.CarInvalid);
+
             }
 
         }
