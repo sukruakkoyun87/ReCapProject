@@ -35,7 +35,7 @@ namespace Business.Concrete
             var dateRent = rental.RentDate;
             var dateReturn = rental.ReturnDate;
             var result = DateTime.Compare(dateRent, dateReturn);
-            if (dateRent > dateReturn || dateReturn == null)
+            if (dateRent < dateReturn && dateReturn == null)
                 return new ErrorResult(Messages.RentalInvalid);
             else
             {
