@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Business.Abstract;
 using Business.Constant;
@@ -10,16 +11,16 @@ using Entities.DTOs;
 
 namespace Business.Concrete
 {
-   public  class RentalManager:IRentalService
-   {
-       private IRentalDal _rentalDal;
+    public class RentalManager : IRentalService
+    {
+        private IRentalDal _rentalDal;
 
-       public RentalManager(IRentalDal rentalDal)
-       {
-           _rentalDal = rentalDal;
-       }
+        public RentalManager(IRentalDal rentalDal)
+        {
+            _rentalDal = rentalDal;
+        }
 
-       public IDataResult<List<Rental>> GetAll()
+        public IDataResult<List<Rental>> GetAll()
         {
             if (DateTime.Now.Hour == 22)
             {
@@ -30,18 +31,19 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            var result = _rentalDal.Get(x => x.CarId == rental.CarId && x.ReturnDate == null);
-        
-            if (result.ReturnDate==null&&result.CarId==rental.CarId)
-            {
+           
+            var dateRent = rental.RentDate;
+            var dateReturn = rental.ReturnDate;
+            var result = DateTime.Compare(dateRent, dateReturn);
+            if (dateRent > dateReturn || dateReturn == null)
                 return new ErrorResult(Messages.RentalInvalid);
-            }
             else
             {
-               
                 _rentalDal.Add(rental);
                 return new SuccessResult(Messages.RentalAdded);
             }
+
+
         }
 
         public IResult Update(Rental rental)
