@@ -31,12 +31,12 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-           
-            var dateRent = rental.RentDate;
-            var dateReturn = rental.ReturnDate;
-            var result = DateTime.Compare(dateRent, dateReturn);
-            if (dateRent < dateReturn && dateReturn == null)
+            var result = _rentalDal.GetAll(x => x.CarId == rental.CarId && x.ReturnDate == null);
+            
+            if (result.Count>0)
+            {
                 return new ErrorResult(Messages.RentalInvalid);
+            }
             else
             {
                 _rentalDal.Add(rental);
