@@ -31,11 +31,16 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            var result = _rentalDal.GetAll(x => x.CarId == rental.CarId && x.ReturnDate == null);
-            
-            if (result.Count>0)
+            var result = _rentalDal.GetAll(x => x.CarId == rental.CarId);
+            var resultReturnDate = rental.ReturnDate;
+
+            if (result.Count > 0 )
             {
                 return new ErrorResult(Messages.RentalInvalid);
+            }
+            else if (resultReturnDate==null)
+            {
+                return new ErrorResult(Messages.RentalReturnDate);
             }
             else
             {
