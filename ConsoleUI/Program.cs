@@ -22,7 +22,7 @@ namespace ConsoleUI
 
             //rentalManager.Add(new Rental { CustomerId = 1, CarId = 1, RentDate = new DateTime(2021, 02, 10) });
 
-            var rentalAddResult= rentalManager.Add(new Rental { CustomerId = 2, CarId = 1, RentDate = new DateTime(2021, 02, 10) ,ReturnDate=new DateTime(2021,02,15)});
+            var rentalAddResult= rentalManager.Add(new Rental { CustomerId = 2, CarId = 1, RentDate = new DateTime(2021, 02, 10) });
             if (rentalAddResult.Success)
             {
                 Console.WriteLine(rentalAddResult.Message);
