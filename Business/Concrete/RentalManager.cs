@@ -5,6 +5,7 @@ using System.Text;
 using Business.Abstract;
 using Business.Constant;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -32,12 +33,10 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalListed);
         }
 
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
       
-
-            ValidationTool.Validate(new RentalValidator(), rental);
-
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }

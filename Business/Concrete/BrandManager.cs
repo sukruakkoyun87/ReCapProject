@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Business.Abstract;
 using Business.Constant;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -32,19 +34,12 @@ namespace Business.Concrete
             }
             
         }
-
+        [ValidationAspect(typeof(BrandValidator))]
         public IResult Add(Brand brand)
         {
-            if (brand.BrandName.Min() == 2)
-            {
-                return new ErrorResult(Messages.BrandInvalid);
-            }
-            else
-            {
-                _brandDal.Add(brand);
-                return new SuccessResult(Messages.BrandAdded);
-            }
-
+          
+          _brandDal.Add(brand);
+           return new SuccessResult(Messages.BrandAdded);
         }
 
         public IResult Update(Brand brand)
