@@ -31,14 +31,8 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            var result = _rentalDal.GetAll(x => x.CarId == rental.CarId);
-            var resultReturnDate = rental.ReturnDate;
 
-            if (result.Count > 0 )
-            {
-                return new ErrorResult(Messages.RentalInvalid);
-            }
-            else if (resultReturnDate==null)
+            if (rental.ReturnDate==null)
             {
                 return new ErrorResult(Messages.RentalReturnDate);
             }

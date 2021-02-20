@@ -45,7 +45,7 @@ namespace Business.Constant
         public static string RentalDeleted = "Rental Silindi";
         public static string RentalUpdated = "Rental Güncellendi";
         public static string RentalListed = "Rental Listelendi ";
-        public static string RentalReturnDate = "Return Date Null Olamaz ";
+        public static string RentalReturnDate = "Return Date Null Olamaz";
 
     }
 }
