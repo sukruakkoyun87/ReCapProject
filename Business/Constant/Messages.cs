@@ -47,5 +47,10 @@ namespace Business.Constant
         public static string RentalListed = "Rental Listelendi ";
         public static string RentalReturnDate = "Araba henüz teslim edilmedi.";
 
+        public static string CarImageAdded = "Car Image Added Successfully!";
+        public static string CarImageCarIdInvalid = "Invalid Car Id, Registration Failed.";
+        public static string CarImageDeleted = "Car Image Deleted Successfully!";
+        public static string CarImageUpdated = "Car Image Updated Successfully!";
+        public static string CarImageLimitExceeded = "Car Image Limit Exceeded!";
     }
 }
