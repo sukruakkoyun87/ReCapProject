@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using Core.Entities;
+using Core.Entities.Abstract;
 
 
 namespace Entities.Concrete
