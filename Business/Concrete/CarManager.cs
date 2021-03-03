@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constant;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -25,42 +26,26 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            if (DateTime.Now.Hour==22)
+            if (DateTime.Now.Hour == 9)
             {
                 return new ErrorDataResult<List<Car>>(Messages.Maintenance);
             }
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarListed);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarListed);
         }
 
+        [SecuredOperation("car.add,Admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
 
-            _carDal.Update(car);
-           return new SuccessResult(Messages.CarAdded);
+            _carDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
         }
 
         public IResult Update(Car car)
         {
-            if (car.CarName.Length == 2 )
-            {
-                if (car.DailyPrice > 0)
-                {
-                    _carDal.Update(car);
-                    return new SuccessResult(Messages.CarUpdated);
-
-                }
-                else
-                {
-                    return new ErrorResult(Messages.CarDailyPriceZero);
-                }
-            }
-            else
-            {
-                return new ErrorResult(Messages.CarInvalid);
-
-            }
-
+            _carDal.Update(car);
+            return new SuccessResult(Messages.CarUpdated);
         }
 
         public IResult Delete(Car car)
@@ -84,11 +69,11 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(x => x.ColorId == colorId));
         }
 
-        public IDataResult<List<CarDetailDto>>GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
-    
+
     }
 }

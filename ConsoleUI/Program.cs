@@ -10,7 +10,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //CarDetials();
+            CarDetials();
 
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
             UserManager userManager = new UserManager(new EfUserDal());
@@ -22,16 +22,16 @@ namespace ConsoleUI
 
             //rentalManager.Add(new Rental { CustomerId = 1, CarId = 1, RentDate = new DateTime(2021, 02, 10) });
 
-            var rentalAddResult= rentalManager.Add(new Rental { CustomerId = 2, CarId = 1, RentDate = new DateTime(2021, 02, 10) });
-            if (rentalAddResult.Success)
-            {
-                Console.WriteLine(rentalAddResult.Message);
+            //var rentalAddResult= rentalManager.Add(new Rental { CustomerId = 2, CarId = 1, RentDate = new DateTime(2021, 02, 10) });
+            //if (rentalAddResult.Success)
+            //{
+            //    Console.WriteLine(rentalAddResult.Message);
                 
-            }
-            else
-            {
-                Console.WriteLine(rentalAddResult.Message);
-            }
+            //}
+            //else
+            //{
+            //    Console.WriteLine(rentalAddResult.Message);
+            //}
             
 
 
